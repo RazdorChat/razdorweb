@@ -1,0 +1,4 @@
+sanic
+sanic-ext
+requests
+Jinja2
