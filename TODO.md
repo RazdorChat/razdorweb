@@ -1,0 +1,1 @@
+## Get the user id + password from cookies

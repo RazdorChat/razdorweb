@@ -2,3 +2,6 @@ sanic
 sanic-ext
 requests
 Jinja2
+setuptools # needed if doing this in venv
+sanic_jinja2
+pyjwt
