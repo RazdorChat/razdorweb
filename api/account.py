@@ -26,9 +26,20 @@ def DeleteAcc(id: str, auth: str, url: str):
         return "ERR"
     return Response
 
+
 # Generate an auth from the users browser cookies
 def GenAuth(id: str, password: str, url: str):
     Furl = "{}/api/user/{}/authkey".format(url, id)
+    try:
+        Request = requests.post(url=Furl, json={"auth": password})
+        Response = json.loads(Request.content.decode())
+    except:
+        return "ERR"
+    return Response
+
+
+def GenAuthUsername(username: str, discrim: str, password: str, url: str):
+    Furl = "{}/api/user/{}/{}/authkey".format(url, username, discrim)
     try:
         Request = requests.post(url=Furl, json={"auth": password})
         Response = json.loads(Request.content.decode())

@@ -11,6 +11,6 @@ password = sys.argv[3]
 response = requests.post(url="{}/api/user/{}/authkey".format(url, id), json={
     "auth": password
 })
-authkey = json.loads(response.content.decode())["authentication"]
+authkey = json.loads(response.content.decode())
 
-print(f"AUTH: {authkey}")
+print(f"response: {authkey}")
