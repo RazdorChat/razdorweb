@@ -1,4 +1,4 @@
-# Functions to manage account creation and deletion, and authkey generation from user cookies
+# Functions to manage account creation and deletion, and authkey generation from user cookies and getting usernames
 
 import requests, json
 
@@ -45,4 +45,16 @@ def GenAuthUsername(username: str, discrim: str, password: str, url: str):
         Response = json.loads(Request.content.decode())
     except:
         return "ERR"
+    return Response
+
+def GetName(id : str, url : str):
+    Furl = "{}/api/user/{}".format(url, id)
+    try:
+        Request = requests.get(
+            url=Furl   
+        )
+        Response = json.loads(Request.content.decode())
+    except:
+        return "ERR"
+    
     return Response

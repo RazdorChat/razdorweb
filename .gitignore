@@ -1,2 +1,3 @@
 razdor
 data/*.json
+api/__pycache__

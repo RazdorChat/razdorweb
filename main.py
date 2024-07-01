@@ -49,28 +49,35 @@ def authorized():
 
     return decorator
 
+
 # this one checks if they are authorised and are trying to login/register
 def IsAuthed():
     def decorator(f):
         @wraps(f)
         async def decorated_function(request, *args, **kwargs):
-            is_authorized = verifyToken(app.config.KEY, request.cookies.get(app.config.COOKIE))
+            is_authorized = verifyToken(
+                app.config.KEY, request.cookies.get(app.config.COOKIE)
+            )
             # Check if user is already authed and trying to login again
             if is_authorized:
                 return redirect("/")
             else:
                 response = await f(request, *args, **kwargs)
                 return response
+
         return decorated_function
+
     return decorator
+
 
 @app.route("/")
 @authorized()
 async def index(request):
     Ecookie = request.cookies.get(app.config.COOKIE)
     cookie = extractToken(app.config.KEY, Ecookie)
-    print(cookie)
-    return jinja.render("index.html", request, test="hey there you are {}!".format(cookie["user"]))
+    return jinja.render(
+        "index.html", request, test=cookie["user"]
+    )
 
 
 @app.route("/login", methods=["POST", "GET"])
@@ -89,25 +96,22 @@ async def login(request):
             )
         if verify["op"] == "Created.":
             payload = {
-                "user":{
+                "user": {
                     "id": verify["id"],
                     "username": username[0],
                     "discrim": username[1],
                     "password": password,
-                    "authkey": verify["authentication"]
+                    "authkey": verify["authentication"],
                 }
             }
-            
+
             cookie = createToken(app.config.KEY, payload)
             response = redirect("/")
             response.add_cookie(
-                app.config.COOKIE,
-                cookie,
-                max_age=604800, # One week
-                httponly = False
+                app.config.COOKIE, cookie, max_age=604800, httponly=False  # One week
             )
             return response
-                    
+
         elif verify["op"] == "void":
             return jinja.render(
                 "login.html", request, error="Incorrect username or password."
@@ -115,15 +119,40 @@ async def login(request):
 
     return jinja.render("login.html", request, error=" ")
 
-@app.route("/signup")
+
+@app.route("/signup", methods=["POST", "GET"])
 @IsAuthed()
-def signup(requst, methods=["POST", "GET"]):
-    if requst.method == "POST":
+async def signup(request):
+    if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
         try:
-            CreateAcc(username, password, app.config.URL)
-            
+            account = CreateAcc(username, password, app.config.URL)
+        except:
+            return text("Something went wrong")
+
+        if account["op"] == "Created.":
+            discrim = GetName(account["id"], app.config.URL)["discrim"]
+            authkey = GenAuthUsername(username, discrim, password, app.config.URL)
+            payload = {
+                "user": {
+                    "id": account["id"],
+                    "username": username,
+                    "discrim": discrim,
+                    "password": password,
+                    "authkey": authkey["authentication"],
+                }
+            }
+            cookie = createToken(app.config.KEY, payload)
+            response = redirect("/")
+            response.add_cookie(
+                app.config.COOKIE, cookie, max_age=604800, httponly=False  # One week
+            )
+            return response
+        else:
+            return text("Something went wrong :(")
+    return jinja.render("signup.html", request)
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8888, debug=True)
