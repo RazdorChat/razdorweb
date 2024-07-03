@@ -9,6 +9,30 @@
 </head>
 <body>
     <script src="/static/main.js"></script>
-    <p>{{ test.username }}</p>
+    <div class="container-fluid vh-100">
+        <div class="row">
+            <div class="col-half vh-100 server-area">
+                <img src="/static/ticon.ico" alt="Test" height="48" width="48"/>
+            </div>
+            <div class="col-md-2 vh-100" style="position: relative;">
+                <h4>Conversations</h4>
+                <div class="col d-flex flex-column fixed-bottom" style="position: absolute; bottom: 0;">
+                    <h5>Welcome, {{ userdata.username }}#{{ userdata.discrim }} </h5>
+                </div>
+            </div>
+            <div class="col-9-5 vh-100 message-area" id="messageBox">
+                <h4>Chatbox</h4>
+            </div>
+    </div>
+    <button type="button" class="btn btn-primary" onclick="toggleExpand()">Toggle Expand</button>
+    <script>
+        function toggleExpand() {
+            var messageBox = document.getElementById('messageBox');
+            messageBox.classList.toggle('col-md-12');
+            messageBox.classList.toggle('col-md-4');
+            alert("hello")
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

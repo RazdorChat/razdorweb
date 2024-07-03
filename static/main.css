@@ -12,6 +12,24 @@ body {
     background-color: #2C2F33;
 }
 
+.message-area {
+    background-color: #252525;
+}
+
+.server-area {
+    background-color: #2C2F33;
+}
+
+.col-half {
+    flex: 0 0 4.16667%; /* 50% of col-1 (8.33333%) */
+    max-width: 4.16667%;
+}
+
+.col-9-5 {
+    flex: 0 0 79.16667%;
+    max-width: 79.16667%;
+}
+
 /*
 .gradient-custom {
     /* fallback for old browsers 
@@ -25,8 +43,8 @@ body {
 }
 */
 .background-cover-image{
-  background-image: url("/static/blur-cover.png");
-  height: 100%;
+    background-image: url("/static/blur-cover.png");
+    height: 100%;
 }
 
 .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
@@ -34,19 +52,19 @@ body {
 }
 
 .shadows{
-  box-shadow: 7px 10px 15px 5px #2C2F33;
+    box-shadow: 7px 10px 15px 5px #2C2F33;
 }
 
 .top-left {
-  position: absolute;
-  top: 8px;
-  left: 16px;
-  font-size: 18px;
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    font-size: 18px;
 }
 
 .menu {
     position: relative;
-  }
+}
   
 .top {
     position: absolute;
@@ -60,22 +78,23 @@ body {
 
 /* unvisited link */
 a:link {
-  color: #D98F8F;
+    color: #D98F8F;
 }
 
 /* visited link */
 a:visited {
-  color: #D98F8F;
+    color: #D98F8F;
 }
 
 /* mouse over link */
 a:hover {
-  color: hotpink;
+    color: hotpink;
 }
 
 /* selected link */
 a:active {
-  color: #D98F8F;
+    color: #D98F8F;
 }
 
-/* * { border: 1px solid red !important; } Used for debugging*/
+
+* { border: 1px solid red !important; } /*Used for debugging*/

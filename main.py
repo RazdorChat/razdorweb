@@ -75,9 +75,7 @@ def IsAuthed():
 async def index(request):
     Ecookie = request.cookies.get(app.config.COOKIE)
     cookie = extractToken(app.config.KEY, Ecookie)
-    return jinja.render(
-        "index.html", request, test=cookie["user"]
-    )
+    return jinja.render("index.html", request, userdata=cookie["user"])
 
 
 @app.route("/login", methods=["POST", "GET"])
